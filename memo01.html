@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>myMemoPad初級</title>
+  <link rel="stylesheet" href="css/sample.css">
+</head>
+
+<body>
+  <header>
+    <h1>MemoPad初級編</h1>
+  </header>
+
+  <main>
+    <textarea id="text_area"></textarea>
+    <ul>
+      <li id="save">Save</li>
+      <li id="clear">Clear</li>
+    </ul>
+  </main>
+
+  <footer>
+    <small>G's</small>
+  </footer>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+  <script>
+
+    //データを保存するときの処理
+  $("#save").on("click",function(){ //saveボタンをクリックした場合
+    const text = $("#text_area").val(); //変数：テキストエリアの値
+    localStorage.setItem("memo",text);  //処理:ローカルストレージに登録する（キー,値）
+  }
+  );
+
+   //データを削除するときの処理
+  $("#clear").on("click", function () { //clearボタンをクリックした場合
+   localStorage.removeItem("memo");     //処理：ローカルストレージから削除する（キー）
+  $("#text_area").val("");  //テキストエリアの値を空白にする
+  });
+
+   //データを取得する時の処理
+  if(localStorage.getItem("memo")){
+    const text = localStorage.getItem("memo");
+    $("#text_area").val(text);
+  }
+
+
+  </script>
+
+</body>
+
+</html>

@@ -1,0 +1,21 @@
+@media screen and (max-width:480px) { 
+/* 画面サイズが480px以下の場合ここの記述が適用される */
+ main{
+    width: 100%;
+
+ }
+
+
+
+}
+
+
+body{
+background-color: antiquewhite;
+width: 960px;
+margin: auto
+}
+
+
+
+

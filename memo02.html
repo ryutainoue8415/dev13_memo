@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>myMemoPad中級</title>
+  <link rel="stylesheet" href="css/sample.css">
+</head>
+
+<body>
+  <header>
+    <h1>MemoPad中級編</h1>
+  </header>
+
+  <main>
+    <input type="text" id="input">
+    <textarea id="text_area"></textarea>
+    <ul>
+      <li id="save">Save</li>
+      <li id="clear">Clear</li>
+    </ul>
+  </main>
+
+  <footer>
+    <small>G's</small>
+  </footer>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+  <script>
+
+  //データを保存するときの処理
+ 
+  //値の取得
+  $("#save").on("click", function () {  //saveボタンをクリックした場合
+    const input = $("#input").val();     //変数：インプットエリアの値
+    const text  = $("#text_area").val(); //変数：テキストエリアの値
+    
+    const data = {   //オブジェクト型に変数定義
+      input:input,  //キー:値
+      text: text,   //キー:値
+    };
+   console.log(data); //値が取れているかを確認
+   const json = JSON.stringify(data); //変数定義：data引数をjson形式に変換
+   console.log(json);
+   localStorage.setItem("memo",json); //ローカルストレージに保存"memo"キーで値をjson形式で
+  });
+
+
+   //データを削除するときの処理
+  $("#clear").on("click", function () { //clearボタンをクリックした場合
+    localStorage.removeItem("memo");     //処理：ローカルストレージから削除する（プロパティ名）
+    $("#input").val("");      //インプットエリアの値を空白にする
+    $("#text_area").val("");  //テキストエリアの値を空白にする
+  });
+
+  //データを取得する時の処理
+  if (localStorage.getItem("memo")) {  // ローカルストレージの"memo"のキーを更新
+    const json = localStorage.getItem("memo");  //変数定義：ローカルストレージの"memo"のキー
+    console.log(json);
+    const data = JSON.parse(json); //変数定義：ローカルストレージの"memo"のキーをjson文字列をjsに変換
+    console.log(data);
+
+    $("#input").val(data.input);     //#inputにdataの中のtitleを取得
+    $("#text_area").val(data.text);  //#text_areaにdataの中のtextを取得
+  }
+
+  </script>
+
+</body>
+
+</html>

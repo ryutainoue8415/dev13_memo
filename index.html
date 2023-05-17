@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="css/study.css">
+    <title>study_game</title>
+
+</head>
+<body>
+<h1>勉強アプリ</h1>
+
+<button id="start">start</button>
+
+<div class="question">
+    <p>問題</p>
+    <p id="question_text"></p>
+</div>
+
+<div class="answer">
+<p id="answer_text">回答</p>
+    <p id="answer_text1">回答</p>
+    <p id="answer_text2">回答</p>
+    <p id="answer_text3">回答</p>
+</div>
+
+<div id="history">
+<p>結果履歴:正解or不正解</p>
+</div>
+
+<div class="result">
+    <p>結果発表</p>
+    <p>点</p>
+</div>
+
+<button id="end">end</button>
+
+<footer>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
+</footer>
+
+<script>
+const history = [];  //結果履歴の表示枠の変数定義
+$("#start").on("click",function(){  //スタートボタンを押した場合のクリックイベント
+
+    // 質問配列
+const question = ["「雨ニモマケズ」の詩人は誰ですか？","「走れメロス」の作者は誰ですか？","「こころ」の主人公の名前は何ですか？","「吾輩は猫である」の主人公の名前は何ですか？","「羅生門」の作者は誰ですか？"];
+const question_random = Math.floor(Math.random()* question.length); //question配列数の乱数生成(0~4)
+const question_result = question[question_random];   //配列の何番目の要素か指定(0~4)
+$("#question_text").text(question_result);  //質問textに要素を出力
+
+    //選択肢配列
+const answer   = [["芥川龍之介","宮沢賢治","夏目漱石"],["太宰治","森鴎外","大江健三郎"],["先生","坊ちゃん","金田一"],["坊ちゃん","吾輩","金田一"],["芥川龍之介","宮沢賢治","夏目漱石"]];
+// const answer_random =Math.floor(Math.random()*answer[0].length);  //選択肢の配列要素をランダムに表示したい//数の乱数生成(0~2)
+const answer_text = answer[question_random];  //質問に対する選択肢を設定
+console.log(question_random);  //質問の配列順番をチェック
+console.log(answer_text);      //質問の配列順番と選択肢の順番が同じかチェック
+$("#answer_text1").text(answer_text[0]);  //選択肢textに要素を出力
+$("#answer_text2").text(answer_text[1]);  //選択肢textに要素を出力
+$("#answer_text3").text(answer_text[2]);  //選択肢textに要素を出力
+
+
+    //正解配列
+const correct = ["宮沢賢治", "太宰治", "先生", "吾輩", "芥川龍之介"];  //正解回答
+
+
+    //結果を履歴表示する
+history.unshift(answer_text);
+const historyHtml =[];
+for (let i =0; i<question.length; i++){
+historyHtml.push("<p>" + history[i] + "</p>");
+}
+console.log(historyHtml);
+$("#history").html(historyHtml);
+
+   //start buttonをクリックしたらanswer_textの値を取得
+const input =$("#answer_text").val();
+const data  = {
+    text:answer_text,
+};
+console.log(data);
+const json = JSON.stringify(data); //data引数をjson形式に変換
+console.log(json);
+localStorage.setItem("memo",json); //json形式で"memo"キーで保存
+
+});
+
+    //データを削除する処理
+$("#end").on("click",function(){
+localStorage.removeItem("memo");
+$("#answer_text").val("");
+})
+
+    //データを取得する処理
+if(localStorage.getItem("memo")){
+const json = localStorage.getItem("memo"); //memoキーを指定
+console.log(json);
+const data = JSON.parse(json); //json形式からjs形式に変換
+console.log = (data);
+$("#answer_text").val(data.answer_text); //answer_textに値を表示
+}
+
+
+
+
+
+
+
+
+</script>
+
+</body>
+</html>
